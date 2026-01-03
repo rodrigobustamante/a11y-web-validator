@@ -18,6 +18,7 @@ A specialized Micro-SaaS tool designed to audit web URLs for accessibility barri
 ## 🛠 Tech Stack
 
 ### Frontend
+
 - **Next.js 15** with App Router
 - **Tailwind CSS** for styling
 - **Radix UI** for accessible components
@@ -25,6 +26,7 @@ A specialized Micro-SaaS tool designed to audit web URLs for accessibility barri
 - **Recharts** for data visualization
 
 ### Backend
+
 - **Node.js** with Express
 - **Playwright** for browser automation
 - **@axe-core/playwright** for accessibility testing
@@ -66,27 +68,32 @@ a11y-web-validator/
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
-git clone https://github.com/yourusername/a11y-web-validator.git
+git clone https://github.com/rodrigobustamante/a11y-web-validator.git
 cd a11y-web-validator
 ```
 
 2. **Install pnpm (if not already installed)**
+
 ```bash
 npm install -g pnpm
 ```
 
 3. **Install dependencies**
+
 ```bash
 pnpm install
 ```
 
 4. **Install Playwright browsers**
+
 ```bash
 cd apps/api && pnpm exec playwright install chromium
 ```
 
 Or simply use the automated setup script:
+
 ```bash
 ./setup.sh
 ```
@@ -100,18 +107,21 @@ pnpm dev
 ```
 
 This will start:
+
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:3001
 
 ### Running Individual Apps
 
 **Frontend only:**
+
 ```bash
 cd apps/web
 pnpm dev
 ```
 
 **Backend only:**
+
 ```bash
 cd apps/api
 pnpm dev
@@ -124,6 +134,7 @@ pnpm dev
 **POST** `/api/audit`
 
 Request body:
+
 ```json
 {
   "url": "https://example.com"
@@ -131,6 +142,7 @@ Request body:
 ```
 
 Response:
+
 ```json
 {
   "success": true,
