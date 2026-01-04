@@ -10,10 +10,12 @@ const app = express();
 
 // Security middleware
 app.use(helmet());
-app.use(cors({
-  origin: config.corsOrigin,
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: config.corsOrigin,
+    credentials: true,
+  })
+);
 
 // Body parsing middleware
 app.use(express.json());
@@ -34,9 +36,10 @@ app.use('/api/audit', auditRoutes);
 app.use(errorHandler);
 
 const PORT = config.port;
+const HOST = '0.0.0.0'; // Required for Docker/Railway
 
-app.listen(PORT, () => {
-  console.log(`🚀 A11yScan API Server running on port ${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`🚀 A11yScan API Server running on http://${HOST}:${PORT}`);
   console.log(`📍 Environment: ${config.nodeEnv}`);
 });
 
