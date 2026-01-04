@@ -4,7 +4,6 @@ node_modules/
 .pnp.js
 
 # PNPM
-pnpm-lock.yaml
 .pnpm-store/
 
 # Testing
