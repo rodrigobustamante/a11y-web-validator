@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "build": "tsc",
-    "start": "node dist/main.js",
+    "start": "node dist/apps/api/src/main.js",
     "lint": "eslint src --ext .ts",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist"

@@ -40,6 +40,6 @@ ENV PORT=3001
 # Set working directory for runtime
 WORKDIR /app/apps/api
 
-# Start the API
-CMD ["node", "dist/main.js"]
+# Start the API (path includes full source structure due to monorepo tsconfig)
+CMD ["node", "dist/apps/api/src/main.js"]
 
