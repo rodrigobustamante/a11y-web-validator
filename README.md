@@ -1,5 +1,6 @@
 # A11yScan - Web Accessibility Validator
 
+[![CI](https://github.com/rodrigobustamante/a11y-web-validator/actions/workflows/ci.yml/badge.svg)](https://github.com/rodrigobustamante/a11y-web-validator/actions/workflows/ci.yml)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)
 ![PNPM](https://img.shields.io/badge/pnpm-%3E%3D8.0.0-orange)
