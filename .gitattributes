@@ -1,3 +1,2 @@
 # PNPM lockfile should use LF line endings
 pnpm-lock.yaml text eol=lf
-

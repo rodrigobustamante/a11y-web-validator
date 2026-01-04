@@ -78,14 +78,14 @@ The system follows a worker-based pattern to handle intensive browser rendering:
 - `/packages/types`: Shared TypeScript interfaces.
 - `/packages/config`: Shared ESLint/Prettier/Tailwind configs.
 
+## 📝 Code Style Conventions
+
+1. **Single trailing newline:** All files must end with exactly one newline character (no multiple blank lines at EOF).
+2. **English only:** All comments, documentation, and code annotations must be written in English.
+3. **Consistent formatting:** Use Prettier with the shared config from `@a11y-web-validator/config`.
+
 ## 💬 Prompting Examples for the AI
 
 - _"Based on `agents.md`, generate the core Node.js service using Playwright and Axe-core. Ensure it closes the browser instance even if the page fails to load."_
 - _"Create a React component for the audit results list using Radix UI Accordion to group issues by impact level."_
 - _"Review the scraping logic. How can we make the audit faster by disabling unnecessary resources like images or fonts during the scan?"_
-
-```
-
-Would you like me to generate the **`package.json`** file and the initial **Playwright configuration** to get the project started?
-
-```

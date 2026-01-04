@@ -1,11 +1,11 @@
 import { defineConfig } from '@playwright/test';
 
 /**
- * Playwright configuration for A11yScan
- * This config is primarily for the audit service, not for testing
+ * Playwright configuration for A11yScan API
+ * This config is for future E2E tests of the audit service
  */
 export default defineConfig({
-  testDir: './apps/api/tests',
+  testDir: './tests',
   timeout: 30000,
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
@@ -18,4 +18,3 @@ export default defineConfig({
     headless: true,
   },
 });
-

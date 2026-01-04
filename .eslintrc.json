@@ -3,4 +3,3 @@
   "extends": ["./packages/config/eslint-config.js"],
   "ignorePatterns": ["node_modules/", "dist/", ".next/", "out/"]
 }
-

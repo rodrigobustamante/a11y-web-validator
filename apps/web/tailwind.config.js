@@ -5,21 +5,39 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#1e40af', // rgb(30 64 175)
+          700: '#1e3a8a', // rgb(30 58 138)
+          800: '#1e3a8a',
+          900: '#1e3a8a',
+          DEFAULT: '#1e40af',
         },
+        accent: {
+          400: '#a78bfa',
+          500: '#8b5cf6',
+          600: '#6d28d9', // rgb(109 40 217)
+          700: '#5b21b6',
+          DEFAULT: '#6d28d9',
+        },
+        // Dark mode background
+        dark: {
+          bg: '#030620', // rgb(3 6 32)
+          card: '#0a0f2e',
+          border: '#1e2a4a',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         'fade-in': {
@@ -39,4 +57,3 @@ module.exports = {
   },
   plugins: [],
 };
-

@@ -95,4 +95,3 @@ export type ApiResponse<T = unknown> = ApiSuccessResponse<T> | ApiErrorResponse;
 export interface AuditRequest {
   url: string;
 }
-
