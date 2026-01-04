@@ -9,15 +9,16 @@ export class PdfController {
    * POST /api/audit/export-pdf
    * Generate and download PDF report from audit results
    */
-  async exportPdf(req: Request, res: Response, next: NextFunction) {
+  async exportPdf(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const auditResult: A11yAuditResult = req.body;
 
       if (!auditResult || !auditResult.url) {
-        return res.status(400).json({
+        res.status(400).json({
           success: false,
           error: 'Invalid audit result data',
         });
+        return;
       }
 
       console.log(`📄 Generating PDF for: ${auditResult.url}`);

@@ -5,10 +5,10 @@ import { Request, Response, NextFunction } from 'express';
  */
 export function errorHandler(
   error: Error,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
-) {
+  _next: NextFunction
+): void {
   console.error('❌ Error:', error);
 
   // Default error response

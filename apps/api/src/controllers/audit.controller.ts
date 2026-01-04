@@ -10,7 +10,7 @@ export class AuditController {
    * POST /api/audit
    * Run accessibility audit on a URL
    */
-  async runAudit(req: Request, res: Response, next: NextFunction) {
+  async runAudit(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       // Validate request body
       const { url } = urlSchema.parse(req.body);
@@ -31,11 +31,12 @@ export class AuditController {
     } catch (error) {
       // Handle validation errors
       if (error instanceof z.ZodError) {
-        return res.status(400).json({
+        res.status(400).json({
           success: false,
           error: 'Validation failed',
           details: error.errors,
         });
+        return;
       }
 
       // Pass other errors to error handler middleware
@@ -47,7 +48,7 @@ export class AuditController {
    * GET /api/audit/status
    * Health check for audit service
    */
-  async getStatus(req: Request, res: Response) {
+  async getStatus(_req: Request, res: Response): Promise<void> {
     res.json({
       success: true,
       status: 'ready',
