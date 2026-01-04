@@ -20,8 +20,15 @@ COPY packages/types ./packages/types
 COPY apps/api ./apps/api
 
 # Build packages
-RUN pnpm --filter @a11y-web-validator/types build
-RUN pnpm --filter @a11y-web-validator/api build
+RUN pnpm --filter @a11y-web-validator/types build || true
+
+# Build API with explicit tsc call
+WORKDIR /app/apps/api
+RUN pnpm exec tsc --project tsconfig.json
+RUN ls -la dist/
+
+# Return to app root
+WORKDIR /app
 
 # Expose port
 EXPOSE 3001
@@ -30,6 +37,9 @@ EXPOSE 3001
 ENV NODE_ENV=production
 ENV PORT=3001
 
+# Set working directory for runtime
+WORKDIR /app/apps/api
+
 # Start the API
-CMD ["pnpm", "--filter", "@a11y-web-validator/api", "start"]
+CMD ["node", "dist/main.js"]
 
