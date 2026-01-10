@@ -1,3 +1,6 @@
+# Docker Compose for local development
+# For production: Use Railway (API) + Vercel (Frontend)
+
 version: '3.8'
 
 services:
@@ -11,16 +14,15 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - PORT=3001
+      - CORS_ORIGIN=http://localhost:3000
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/health"]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 60s
-    networks:
-      - a11y-network
     # Playwright needs more memory
     deploy:
       resources:
@@ -28,28 +30,3 @@ services:
           memory: 2G
         reservations:
           memory: 1G
-
-  # Frontend Next.js
-  web:
-    build:
-      context: .
-      dockerfile: apps/web/Dockerfile
-      args:
-        - NEXT_PUBLIC_API_URL=http://api:3001
-    container_name: a11y-web
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=http://api:3001
-    depends_on:
-      api:
-        condition: service_healthy
-    networks:
-      - a11y-network
-
-networks:
-  a11y-network:
-    driver: bridge
-
