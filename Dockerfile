@@ -30,12 +30,10 @@ RUN ls -la dist/
 # Return to app root
 WORKDIR /app
 
-# Expose port
-EXPOSE 3001
-
-# Set environment
+# Set environment (Railway will override PORT)
 ENV NODE_ENV=production
-ENV PORT=3001
+
+# Note: Railway injects PORT dynamically, don't hardcode it
 
 # Set working directory for runtime
 WORKDIR /app/apps/api

@@ -8,6 +8,12 @@ import auditRoutes from './routes/audit.routes';
 
 const app = express();
 
+// Health check endpoint - MUST be before any middleware
+app.get('/health', (_req, res) => {
+  console.log('Health check requested');
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // Security middleware
 app.use(helmet());
 app.use(
@@ -23,11 +29,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Rate limiting
 app.use('/api/', rateLimiter);
-
-// Health check endpoint
-app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
 
 // API routes
 app.use('/api/audit', auditRoutes);
