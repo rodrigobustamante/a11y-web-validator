@@ -50,6 +50,12 @@ jobs:
       - name: Build API
         run: pnpm --filter @a11y-web-validator/api build
 
+      - name: Install Chromium (API tests)
+        run: pnpm --filter @a11y-web-validator/api exec playwright install --with-deps chromium-headless-shell
+
+      - name: Test (API)
+        run: pnpm --filter @a11y-web-validator/api test
+
       - name: Build Web
         run: pnpm --filter @a11y-web-validator/web build
 

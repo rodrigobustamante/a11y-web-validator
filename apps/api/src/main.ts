@@ -8,6 +8,9 @@ import auditRoutes from './routes/audit.routes';
 
 const app = express();
 
+// Trust the reverse proxy so rate limiting keys on the real client IP
+app.set('trust proxy', config.trustProxy);
+
 // Health check endpoint - MUST be before any middleware
 app.get('/health', (_req, res) => {
   console.log('Health check requested');
@@ -24,7 +27,7 @@ app.use(
 );
 
 // Body parsing middleware
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Rate limiting
