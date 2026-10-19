@@ -1,6 +1,7 @@
-import { chromium } from 'playwright';
+import { chromium, Browser, BrowserContext, Page } from 'playwright';
 import type { A11yAuditResult } from '@a11y-web-validator/types';
 import { config } from '../config';
+import { browserLimiter, ServiceBusyError } from '../security/concurrency';
 
 export class PdfGeneratorService {
   /**
@@ -19,17 +20,27 @@ export class PdfGeneratorService {
    * Generate a PDF report from audit results
    */
   async generatePdf(result: A11yAuditResult): Promise<Buffer> {
-    const browser = await chromium.launch({ headless: true });
-    const context = await browser.newContext();
-    const page = await context.newPage();
+    if (!browserLimiter.tryAcquire()) {
+      throw new ServiceBusyError();
+    }
+
+    let browser: Browser | null = null;
+    let context: BrowserContext | null = null;
+    let page: Page | null = null;
 
     try {
+      browser = await chromium.launch({ headless: true });
+      // The report is static HTML: no JS and no network access
+      context = await browser.newContext({ javaScriptEnabled: false });
+      page = await context.newPage();
+      await page.route('**/*', (route) => route.abort());
+
       // Generate HTML for the report
       const html = this.generateReportHtml(result);
 
       // Set content and wait for it to render
       await page.setContent(html, {
-        waitUntil: 'networkidle',
+        waitUntil: 'load',
         timeout: config.browserTimeout,
       });
 
@@ -47,16 +58,18 @@ export class PdfGeneratorService {
 
       return Buffer.from(pdf);
     } finally {
-      await page.close();
-      await context.close();
-      await browser.close();
+      if (page) await page.close().catch(console.error);
+      if (context) await context.close().catch(console.error);
+      if (browser) await browser.close().catch(console.error);
+      browserLimiter.release();
     }
   }
 
   /**
    * Generate HTML template for the PDF report
+   * @internal Exposed for testing only
    */
-  private generateReportHtml(result: A11yAuditResult): string {
+  generateReportHtml(result: A11yAuditResult): string {
     const { url, timestamp, healthScore, totalIssues, issuesByImpact, issues } =
       result;
 
@@ -87,7 +100,7 @@ export class PdfGeneratorService {
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>A11yScan Report - ${url}</title>
+  <title>A11yScan Report - ${this.escapeHtml(url)}</title>
   <style>
     * {
       margin: 0;
@@ -342,30 +355,30 @@ export class PdfGeneratorService {
 
   <div class="score-section">
     <div class="score-label">Accessibility Health Score</div>
-    <div class="score-value">${healthScore}/100</div>
+    <div class="score-value">${this.escapeHtml(String(healthScore))}/100</div>
   </div>
 
   <div class="url-info">
-    <div><strong>URL:</strong> ${url}</div>
-    <div><strong>Scan Date:</strong> ${new Date(timestamp).toLocaleString()}</div>
-    <div><strong>Total Issues:</strong> ${totalIssues}</div>
+    <div><strong>URL:</strong> ${this.escapeHtml(url)}</div>
+    <div><strong>Scan Date:</strong> ${this.escapeHtml(new Date(timestamp).toLocaleString())}</div>
+    <div><strong>Total Issues:</strong> ${this.escapeHtml(String(totalIssues))}</div>
   </div>
 
   <div class="summary-grid">
     <div class="summary-card critical">
-      <span class="count">${issuesByImpact.critical}</span>
+      <span class="count">${this.escapeHtml(String(issuesByImpact.critical))}</span>
       <span class="label">Critical</span>
     </div>
     <div class="summary-card serious">
-      <span class="count">${issuesByImpact.serious}</span>
+      <span class="count">${this.escapeHtml(String(issuesByImpact.serious))}</span>
       <span class="label">Serious</span>
     </div>
     <div class="summary-card moderate">
-      <span class="count">${issuesByImpact.moderate}</span>
+      <span class="count">${this.escapeHtml(String(issuesByImpact.moderate))}</span>
       <span class="label">Moderate</span>
     </div>
     <div class="summary-card minor">
-      <span class="count">${issuesByImpact.minor}</span>
+      <span class="count">${this.escapeHtml(String(issuesByImpact.minor))}</span>
       <span class="label">Minor</span>
     </div>
   </div>
@@ -374,7 +387,7 @@ export class PdfGeneratorService {
     issues.length > 0
       ? `
   <div class="issues-section">
-    <h2 class="section-title">Issues Found (${totalIssues})</h2>
+    <h2 class="section-title">Issues Found (${this.escapeHtml(String(totalIssues))})</h2>
     ${issues
       .map((issue) => {
         const colors = getImpactColor(issue.impact);
@@ -382,15 +395,15 @@ export class PdfGeneratorService {
       <div class="issue">
         <div class="issue-header">
           <span class="impact-badge" style="background: ${colors.bg}; color: ${colors.text}; border-color: ${colors.border}">
-            ${issue.impact}
+            ${this.escapeHtml(issue.impact)}
           </span>
           <span class="issue-title">${this.escapeHtml(issue.help)}</span>
         </div>
         <p class="issue-description">${this.escapeHtml(issue.description)}</p>
-        <a href="${issue.helpUrl}" class="issue-help-url">${issue.helpUrl}</a>
+        <a href="${this.escapeHtml(issue.helpUrl)}" class="issue-help-url">${this.escapeHtml(issue.helpUrl)}</a>
         
         <div class="issue-nodes">
-          <div class="node-title">Affected Elements (${issue.nodes.length}):</div>
+          <div class="node-title">Affected Elements (${this.escapeHtml(String(issue.nodes.length))}):</div>
           ${issue.nodes
             .map(
               (node) => `
