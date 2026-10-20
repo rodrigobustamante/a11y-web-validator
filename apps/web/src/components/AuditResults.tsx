@@ -35,6 +35,10 @@ export function AuditResults({ result }: AuditResultsProps) {
     () => groupIssuesByImpact(filteredIssues),
     [filteredIssues]
   );
+  const shareContext = useMemo(
+    () => ({ pageUrl: result.url, scannedAt: result.timestamp }),
+    [result.url, result.timestamp]
+  );
   const isFiltered =
     query.trim() !== '' || selectedImpacts.size !== IMPACT_ORDER.length;
 
@@ -192,7 +196,7 @@ export function AuditResults({ result }: AuditResultsProps) {
           </p>
 
           {groups.length > 0 ? (
-            <IssueGroups groups={groups} />
+            <IssueGroups groups={groups} shareContext={shareContext} />
           ) : (
             <div className="card text-center py-8">
               <p className="text-gray-700 dark:text-gray-300">
