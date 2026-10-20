@@ -36,7 +36,7 @@ export default function HomePage() {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               WCAG Compliance
             </h3>
-            <p className="text-gray-600 dark:text-[#e5ecf6]/66">
+            <p className="text-gray-600 dark:text-[#e5ecf6]/70">
               Checks against WCAG 2.1 and 2.2 accessibility standards
             </p>
           </div>
@@ -50,7 +50,7 @@ export default function HomePage() {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               Detailed Reports
             </h3>
-            <p className="text-gray-600 dark:text-[#e5ecf6]/66">
+            <p className="text-gray-600 dark:text-[#e5ecf6]/70">
               Get actionable insights with code snippets and fix suggestions
             </p>
           </div>
@@ -64,7 +64,7 @@ export default function HomePage() {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               Export Results
             </h3>
-            <p className="text-gray-600 dark:text-[#e5ecf6]/66">
+            <p className="text-gray-600 dark:text-[#e5ecf6]/70">
               Download reports as PDF or share specific issues easily
             </p>
           </div>

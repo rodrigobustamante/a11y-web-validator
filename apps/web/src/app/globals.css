@@ -70,3 +70,35 @@
     @apply bg-gradient-to-r from-primary-600 to-accent-600;
   }
 }
+
+@layer components {
+  /* Highlighted HTML snippet (react-syntax-highlighter, hljs classes) */
+  .code-snippet {
+    @apply m-0 rounded border border-gray-200 bg-white p-3 font-mono text-xs leading-relaxed text-gray-800;
+    @apply dark:border-dark-border dark:bg-[#050a2a] dark:text-gray-200;
+    overflow-wrap: anywhere;
+  }
+
+  /* wrapLongLines relies on inline styles, which are disabled for theming */
+  .code-snippet,
+  .code-snippet code {
+    white-space: pre-wrap;
+  }
+
+  .code-snippet .hljs-tag,
+  .code-snippet .hljs-name {
+    @apply text-blue-800 dark:text-sky-300;
+  }
+
+  .code-snippet .hljs-attr {
+    @apply text-purple-800 dark:text-violet-300;
+  }
+
+  .code-snippet .hljs-string {
+    @apply text-green-800 dark:text-emerald-300;
+  }
+
+  .code-snippet .hljs-comment {
+    @apply italic text-gray-600 dark:text-gray-400;
+  }
+}

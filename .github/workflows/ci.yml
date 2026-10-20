@@ -56,6 +56,9 @@ jobs:
       - name: Test (API)
         run: pnpm --filter @a11y-web-validator/api test
 
+      - name: Test (Web)
+        run: pnpm --filter @a11y-web-validator/web test
+
       - name: Build Web
         run: pnpm --filter @a11y-web-validator/web build
 
@@ -83,4 +86,3 @@ jobs:
           tags: a11y-api:test
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
