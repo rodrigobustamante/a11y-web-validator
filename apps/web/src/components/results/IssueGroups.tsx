@@ -1,18 +1,20 @@
 import * as Accordion from '@radix-ui/react-accordion';
 import clsx from 'clsx';
 import { IMPACT_ORDER, pluralize, type IssueGroup } from '@/lib/issues';
+import type { ShareContext } from '@/lib/share';
 import { IMPACT_STYLES } from './impact-styles';
 import { IssueItem } from './IssueItem';
 
 interface IssueGroupsProps {
   groups: IssueGroup[];
+  shareContext: ShareContext;
 }
 
 /**
  * Issues grouped by impact level; every group starts expanded and each issue
  * is a nested accordion item so long reports stay scannable
  */
-export function IssueGroups({ groups }: IssueGroupsProps) {
+export function IssueGroups({ groups, shareContext }: IssueGroupsProps) {
   return (
     <Accordion.Root
       type="multiple"
@@ -64,7 +66,11 @@ export function IssueGroups({ groups }: IssueGroupsProps) {
             >
               <Accordion.Root type="multiple" className="space-y-3">
                 {issues.map((issue) => (
-                  <IssueItem key={issue.id} issue={issue} />
+                  <IssueItem
+                    key={issue.id}
+                    issue={issue}
+                    shareContext={shareContext}
+                  />
                 ))}
               </Accordion.Root>
             </Accordion.Content>

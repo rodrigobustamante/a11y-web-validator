@@ -3,6 +3,8 @@ import * as Accordion from '@radix-ui/react-accordion';
 import clsx from 'clsx';
 import type { A11yIssue } from '@a11y-web-validator/types';
 import { getWcagCriteria, pluralize } from '@/lib/issues';
+import { formatIssueAsMarkdown, type ShareContext } from '@/lib/share';
+import { CopyButton } from '../CopyButton';
 import { CodeSnippet } from './CodeSnippet';
 import { IMPACT_STYLES } from './impact-styles';
 
@@ -10,9 +12,10 @@ const VISIBLE_NODES = 3;
 
 interface IssueItemProps {
   issue: A11yIssue;
+  shareContext: ShareContext;
 }
 
-export function IssueItem({ issue }: IssueItemProps) {
+export function IssueItem({ issue, shareContext }: IssueItemProps) {
   const [showAll, setShowAll] = useState(false);
   const style = IMPACT_STYLES[issue.impact];
   const criteria = getWcagCriteria(issue.tags);
@@ -78,29 +81,37 @@ export function IssueItem({ issue }: IssueItemProps) {
               WCAG {criterion}
             </span>
           ))}
-          <a
-            href={issue.helpUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ml-auto inline-flex items-center gap-1 text-sm text-primary-600 hover:text-accent-600 focus-ring rounded dark:text-primary-400"
-          >
-            How to fix
-            <span className="sr-only">{issue.help} (opens in a new tab)</span>
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
+          <div className="ml-auto flex items-center gap-4">
+            <CopyButton
+              label="Copy issue"
+              className="text-sm"
+              srContext={`${issue.help} as Markdown`}
+              getText={() => formatIssueAsMarkdown(issue, shareContext)}
+            />
+            <a
+              href={issue.helpUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-accent-600 focus-ring rounded dark:text-primary-400"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-              />
-            </svg>
-          </a>
+              How to fix
+              <span className="sr-only">{issue.help} (opens in a new tab)</span>
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
 
         <div>
@@ -113,14 +124,26 @@ export function IssueItem({ issue }: IssueItemProps) {
                 key={`${node.target.join(' ')}-${index}`}
                 className="space-y-2 rounded border border-gray-200 bg-gray-50 p-3 dark:border-dark-border dark:bg-dark-bg"
               >
-                {node.target.length > 0 && (
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
-                    Selector:{' '}
-                    <code className="break-all text-gray-800 dark:text-gray-200">
-                      {node.target.join(' ')}
-                    </code>
+                <div className="flex items-start justify-between gap-3">
+                  <p className="min-w-0 text-xs text-gray-600 dark:text-gray-400">
+                    {node.target.length > 0 ? (
+                      <>
+                        Selector:{' '}
+                        <code className="break-all text-gray-800 dark:text-gray-200">
+                          {node.target.join(' ')}
+                        </code>
+                      </>
+                    ) : (
+                      `Element ${index + 1}`
+                    )}
                   </p>
-                )}
+                  <CopyButton
+                    label="Copy HTML"
+                    srContext={`of element ${index + 1}`}
+                    getText={() => node.html}
+                    className="shrink-0 text-xs"
+                  />
+                </div>
                 <CodeSnippet code={node.html} />
                 {node.failureSummary && (
                   <p className="whitespace-pre-line text-xs text-gray-700 dark:text-gray-300">
