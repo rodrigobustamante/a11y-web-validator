@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "test": "tsx --test test/issues.test.ts"
+    "test": "tsx --test test/issues.test.ts test/share.test.ts"
   },
   "dependencies": {
     "@a11y-web-validator/types": "*",
