@@ -27,7 +27,8 @@ export function IssueItem({ issue }: IssueItemProps) {
     >
       <Accordion.Header asChild>
         <h4>
-          <Accordion.Trigger className="group flex w-full items-center gap-3 rounded-md p-4 text-left font-medium text-gray-900 hover:bg-gray-50 focus-ring dark:text-white dark:hover:bg-white/5">
+          {/* On narrow screens the title wraps onto its own row below the badge */}
+          <Accordion.Trigger className="group flex w-full flex-wrap items-center gap-x-3 gap-y-2 rounded-md p-4 text-left font-medium text-gray-900 hover:bg-gray-50 focus-ring sm:flex-nowrap dark:text-white dark:hover:bg-white/5">
             <span
               className={clsx(
                 'shrink-0 rounded border px-2 py-0.5 text-xs font-semibold uppercase',
@@ -36,8 +37,10 @@ export function IssueItem({ issue }: IssueItemProps) {
             >
               {style.label}
             </span>
-            <span className="flex-1">{issue.help}</span>
-            <span className="shrink-0 text-sm text-gray-600 dark:text-gray-400">
+            <span className="order-last basis-full sm:order-none sm:flex-1 sm:basis-auto">
+              {issue.help}
+            </span>
+            <span className="ml-auto shrink-0 text-sm text-gray-600 sm:ml-0 dark:text-gray-400">
               {pluralize(issue.nodes.length, 'element')}
             </span>
             <svg
