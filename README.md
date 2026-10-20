@@ -14,7 +14,7 @@ A specialized Micro-SaaS tool designed to audit web URLs for accessibility barri
 - **Detailed Issue Reports** - View violations grouped by impact level (Critical, Serious, Moderate, Minor), filter by impact and search by rule
 - **Code Snippets** - See the exact HTML causing accessibility issues, syntax-highlighted, with its selector and WCAG criteria
 - **Modern UI** - Built with Next.js 15 and Radix UI for an accessible-by-default interface
-- **Export Reports** - Download audit results as PDF or share specific issues
+- **Export & Share** - Download audit results as PDF, copy any issue as Markdown for a ticket or chat, or copy a failing element's HTML
 
 ## 🛠 Tech Stack
 
@@ -175,7 +175,7 @@ Response:
 - [x] **Phase 1: Core Engine** - Playwright + Axe-core integration
 - [x] **Phase 2: API Layer** - REST API with validation and rate limiting
 - [x] **Phase 3: Dashboard** - Result views with filtering and code snippets
-- [ ] **Phase 4: Export & UX** - PDF export and sharing features
+- [x] **Phase 4: Export & UX** - PDF export and sharing features
 
 ## 🤝 Contributing
 
