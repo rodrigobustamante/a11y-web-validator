@@ -1,5 +1,5 @@
 # Dockerfile for A11yScan API with Playwright
-FROM mcr.microsoft.com/playwright:v1.57.0-jammy
+FROM mcr.microsoft.com/playwright:v1.64.1-jammy
 
 WORKDIR /app
 
