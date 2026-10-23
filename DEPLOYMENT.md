@@ -100,6 +100,25 @@ vercel --prod
 
 `CORS_ORIGIN` accepts a single origin, so Vercel preview deployments cannot call the production API.
 
+### Custom domain
+
+With a custom domain (production uses `a11yscan.rodrigobustamante.cl`), `CORS_ORIGIN` must be that domain, not the `vercel.app` URL. Pass it on every deploy, or the frontend loses access to the API:
+
+```bash
+PROJECT_ID=your-project-id \
+CORS_ORIGIN=https://a11yscan.rodrigobustamante.cl \
+./scripts/deploy-cloud-run.sh
+```
+
+To change only the origin without rebuilding the image:
+
+```bash
+gcloud run services update a11y-api --region us-central1 \
+  --update-env-vars CORS_ORIGIN=https://a11yscan.rodrigobustamante.cl
+```
+
+Because only one origin is allowed, the `vercel.app` domain must redirect to the custom domain (Vercel project → Settings → Domains → Edit → Redirect to, 308). Otherwise visitors on the `vercel.app` URL can load the app but every scan fails with a CORS error.
+
 ## Verify
 
 ```bash
