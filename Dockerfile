@@ -39,4 +39,3 @@ WORKDIR /app/apps/api
 
 # Start the API (path includes full source structure due to monorepo tsconfig)
 CMD ["node", "dist/apps/api/src/main.js"]
-
