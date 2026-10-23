@@ -7,7 +7,7 @@
 
 A specialized Micro-SaaS tool designed to audit web URLs for accessibility barriers. Identifies violations of **WCAG 2.1/2.2** standards specifically for users with visual, motor, and cognitive impairments.
 
-**🌐 Live app:** [a11y-web-validator-web.vercel.app](https://a11y-web-validator-web.vercel.app)
+**🌐 Live app:** [a11yscan.rodrigobustamante.cl](https://a11yscan.rodrigobustamante.cl)
 
 ## 🎯 Features
 
@@ -167,7 +167,7 @@ Response:
 
 ### Frontend Usage
 
-1. Open the [live app](https://a11y-web-validator-web.vercel.app), or http://localhost:3000 when running locally
+1. Open the [live app](https://a11yscan.rodrigobustamante.cl), or http://localhost:3000 when running locally
 2. Enter a URL in the input field
 3. Click "Scan Website"
 4. View the detailed accessibility report
