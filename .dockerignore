@@ -39,7 +39,3 @@ Thumbs.db
 
 # Turbo
 .turbo
-
-# Railway config (not needed for docker-compose)
-railway.toml
-

@@ -1,5 +1,5 @@
 # Docker Compose for local development
-# For production: Use Railway (API) + Vercel (Frontend)
+# For production: Cloud Run (API) + Vercel (Frontend), see DEPLOYMENT.md
 
 version: '3.8'
 

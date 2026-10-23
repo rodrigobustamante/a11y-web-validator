@@ -40,7 +40,7 @@ app.use('/api/audit', auditRoutes);
 app.use(errorHandler);
 
 const PORT = config.port;
-const HOST = '0.0.0.0'; // Required for Docker/Railway
+const HOST = '0.0.0.0'; // Required for Docker/Cloud Run
 
 app.listen(PORT, HOST, () => {
   console.log(`🚀 A11yScan API Server running on http://${HOST}:${PORT}`);

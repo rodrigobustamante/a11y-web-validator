@@ -30,14 +30,12 @@ RUN ls -la dist/
 # Return to app root
 WORKDIR /app
 
-# Set environment (Railway will override PORT)
+# Set environment (the host injects PORT, e.g. Cloud Run sets 8080)
 ENV NODE_ENV=production
 
-# Note: Railway injects PORT dynamically, don't hardcode it
 
 # Set working directory for runtime
 WORKDIR /app/apps/api
 
 # Start the API (path includes full source structure due to monorepo tsconfig)
 CMD ["node", "dist/apps/api/src/main.js"]
-
