@@ -22,6 +22,6 @@ export const config = {
   rateLimitMaxRequests: 10, // max 10 requests per windowMs
   browserTimeout: 30000, // 30 seconds
   maxConcurrentScans: 3,
-  // Number of reverse proxy hops to trust (Railway = 1); false disables trust proxy
+  // Number of reverse proxy hops to trust (Cloud Run = 1); false disables trust proxy
   trustProxy: parseTrustProxy(process.env.TRUST_PROXY, process.env.NODE_ENV === 'production'),
 };

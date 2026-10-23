@@ -1,0 +1,6 @@
+# Files uploaded by `gcloud builds submit`; the Docker build itself also
+# applies .dockerignore
+.gcloudignore
+.git
+.github
+#!include:.gitignore
