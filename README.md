@@ -190,6 +190,7 @@ This project is licensed under the MIT License.
 - [Quick Start Guide](./QUICKSTART.md) - Get started in 5 minutes
 - [Usage Examples](./EXAMPLES.md) - API and React examples
 - [Project Structure](./PROJECT_STRUCTURE.md) - Architecture overview
+- [Deployment](./DEPLOYMENT.md) - Vercel + Cloud Run on free tiers
 - [Why PNPM?](./WHY_PNPM.md) - Benefits of using pnpm
 - [Contributing](./CONTRIBUTING.md) - Contribution guidelines
 
