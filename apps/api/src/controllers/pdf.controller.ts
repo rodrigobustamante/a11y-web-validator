@@ -44,7 +44,7 @@ export class PdfController {
         res.status(400).json({
           success: false,
           error: 'Validation failed',
-          details: error.errors,
+          details: error.issues,
         });
         return;
       }
